@@ -8,4 +8,6 @@ function initCaseListGalleries() {
     img.classList.add('js-enabled');
     // your logic...
   });
+
+  console.log("JS REady!");
 }
