@@ -1,3 +1,5 @@
+console.log("SCRIPT FILE LOADED");
+
 window.addEventListener('DOMContentLoaded', () => {
   initCaseListGalleries();
 });
