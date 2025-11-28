@@ -1,15 +1,14 @@
 console.log("SCRIPT FILE LOADED");
 
-window.addEventListener('DOMContentLoaded', () => {
-  initCaseListGalleries();
-});
+window.addEventListener("DOMContentLoaded", () => {
+  console.log("DOMContentLoaded fired");
 
-function initCaseListGalleries() {
-  const images = document.querySelectorAll('.case-list-item_gallery_item');
+  const images = document.querySelectorAll(".case-list-item_gallery_item");
+  console.log("Found images:", images.length);
+
   images.forEach((img) => {
-    img.classList.add('js-enabled');
-    // your logic...
+    img.classList.add("js-enabled");
   });
 
-  console.log("JS REady!");
-}
+  console.log("Init finished");
+});
