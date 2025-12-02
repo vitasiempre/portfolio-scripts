@@ -2,7 +2,7 @@ $('.swiper').each(function index() {
     this.classList.add('added');
     let swiper = new Swiper(this, {
         slidesPerView: "auto",
-        speed: 50,
+        speed: 500,
         mousewheel: {
             forceToAxis: true,
         },
