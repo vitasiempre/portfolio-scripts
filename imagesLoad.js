@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-	console.log("DOM loaded");
 
 	const slugDivs = document.querySelectorAll(".slug");
 	const slugArray = Array.from(slugDivs).map(div => div.textContent.trim());
 
 	slugArray.forEach(slug => {
-		console.log(slug);
 		const apiUrl = ' https://imgload.vvvitasiempre.workers.dev/?slug='+slug;
 
 		fetch(apiUrl)
@@ -22,8 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					data.forEach(item => {
 						const img = document.createElement("img");
 						img.src = item;
-            img.className = 'case-list-item_gallery_item swiper-slider';
-            console.log(img.classList);
+            img.className = 'case-list-item_gallery_item swiper-slide';
 						container.appendChild(img);
 					});
 				} else {
@@ -32,6 +29,4 @@ document.addEventListener("DOMContentLoaded", function () {
 			})
 			.catch(error => console.error("Error fetching data:", error));
 	});
-  
-  
 });
