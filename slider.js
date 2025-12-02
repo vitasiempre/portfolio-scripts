@@ -3,15 +3,11 @@ $('.swiper').each(function index() {
     let swiper = new Swiper(this, {
         slidesPerView: "auto",
         speed: 700,
-        autoplay: {
-            delay: 0,
-        },
         mousewheel: {
             forceToAxis: true,
         },
         keyboard: true,
         freeMode: true,
         spaceBetween: 15,
-
     }
     )});
