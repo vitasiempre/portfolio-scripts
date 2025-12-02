@@ -9,8 +9,5 @@ $('.swiper').each(function index() {
         keyboard: true,
         freeMode: true,
         spaceBetween: 15,
-        momentumBounceRatio: 0.75,
-        momentumVelocityRatio: 0.75,
-        momentumRatio: 0.75,
     }
     )});
