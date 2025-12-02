@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					data.forEach(item => {
 						const img = document.createElement("img");
 						img.src = item;
-            img.className = 'case-list-item_gallery_item';
+            img.className = 'case-list-item_gallery_item swiper-slider';
             console.log(img.classList);
 						container.appendChild(img);
 					});
