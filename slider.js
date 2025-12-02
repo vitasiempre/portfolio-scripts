@@ -8,8 +8,6 @@ $('.swiper').each(function index() {
         },
         keyboard: true,
         freeMode: true,
-        loop: true,
-        slideToClickedSlide: true,
         spaceBetween: 15,
 
     }
