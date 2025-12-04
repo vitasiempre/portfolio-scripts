@@ -145,5 +145,8 @@ function nextImage(wrapper, lightboxItems) {
     .split(',')
     .map(v => parseFloat(v.trim()));
 
+    console.log(' values ', values);
+    
+
     return values[13];
   }
