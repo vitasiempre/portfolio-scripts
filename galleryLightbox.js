@@ -4,22 +4,24 @@ $(".lightbox-wrapper").each(function () {
   let lightboxItems = wrapper.find(".lightbox_item");
   let galleryItems = wrapper.find(".gallery-collection-item.is--cms-item");
   let header = document.querySelector(".header-z-index");
+  let smoothContent = document.querySelector("#smooth-content");
 
   console.log("loaded");
 
   // Open lightbox
   galleryItems.on("click", function () {
-    console.log("open");
-    let index = $(this).index(); // Ensure index is from the current wrapper
-    console.log("index", index);
+    let index = $(this).index();
     lightboxItems.removeClass("is--active");
     lightboxItems.eq(index).addClass("is--active");
     lightbox.css("display", "block");
     
     // Disable scroll
-		// document.body.style.top = `-${window.scrollY}px`;
-    // console.log(`-${window.scrollY}px`);
-    // document.body.style.position = 'fixed';
+    // smoothContent.style.overflow = 'hidden';  
+
+
+		document.body.style.top = `-${window.scrollY}px`;
+    console.log(`-${window.scrollY}px`);
+    document.body.style.position = 'fixed';
     
     // Dim header
     header.style.opacity = 0.03;
@@ -36,10 +38,7 @@ $(".lightbox-wrapper").each(function () {
     wrapper.removeClass("is--active"); // Remove active state when closed
     
     // Enable scroll back
-    // const scrollY = document.body.style.top;
-    // document.body.style.position = '';
-    // document.body.style.top = '';
-    // window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    enableScroll();
     
     // Undim header
     header.style.opacity = 1;
@@ -53,10 +52,7 @@ $(".lightbox-wrapper").each(function () {
     wrapper.removeClass("is--active"); // Remove active state when closed
     
     // Enable scroll back
-    // const scrollY = document.body.style.top;
-    // document.body.style.position = '';
-    // document.body.style.top = '';
-    // window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    enableScroll();
     
     // Undim header
     header.style.opacity = 1;
@@ -106,4 +102,11 @@ function nextImage(wrapper, lightboxItems) {
       : lightboxItems.last(); // Loop to the last item if at the beginning
     activeItem.removeClass("is--active");
     prevItem.addClass("is--active");
+  }
+
+  function enableScroll() {
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
   }
