@@ -141,7 +141,7 @@ function nextImage(wrapper, lightboxItems) {
 
     if (!matrix || matrix === "none") return 0;
     
-    const values = matrix.match(/matrix3d\((.+)\)/)[1]
+    const values = matrix.match(/matrix3d\((.+)\)/)[0]
     .split(',')
     .map(v => parseFloat(v.trim()));
 
