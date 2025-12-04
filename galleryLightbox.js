@@ -1,41 +1,53 @@
-// Get ScrollSmoother instance (must be created before this script)
+// Get ScrollSmoother instance (must be created before this script runs)
 const smoother = ScrollSmoother.get();
-
 let savedScrollY = 0;
 
-function disableScroll() {
+// Lock scroll & visually fix lightbox to viewport
+function disableScroll(lightboxEl) {
   if (!smoother) return;
 
-  // remember current scroll position in smoother space
+  // remember where we are
   savedScrollY = smoother.scrollTop();
 
-  // freeze smooth scrolling
+  // freeze smooth scroll
   smoother.paused(true);
 
-  // hard-lock native scroll just in case
+  // prevent native scroll just in case
   document.documentElement.style.overflow = "hidden";
   document.body.style.overflow = "hidden";
+
+  // compensate for #smooth-content transform:
+  // smooth-content is translated -scrollY,
+  // so we translate the lightbox +scrollY to cancel it out
+  if (lightboxEl) {
+    lightboxEl.style.transform = `translateY(${savedScrollY}px)`;
+  }
 
   console.log("scroll disabled at", savedScrollY);
 }
 
-function enableScroll() {
+// Unlock scroll & restore position
+function enableScroll(lightboxEl) {
   if (!smoother) return;
 
   // resume smoother
   smoother.paused(false);
 
-  // jump back to where we left off
+  // jump back to where we were
   smoother.scrollTop(savedScrollY);
 
-  // unlock native scroll
+  // allow native scroll again
   document.documentElement.style.overflow = "";
   document.body.style.overflow = "";
+
+  if (lightboxEl) {
+    lightboxEl.style.transform = "";
+  }
 
   console.log("scroll enabled, restored to", savedScrollY);
 }
 
-// LIGHTBOX LOGIC ///////////////////////////////////////////////////////
+// LIGHTBOX LOGIC //////////////////////////////////////
 
 $(".lightbox-wrapper").each(function () {
   let wrapper = $(this);
@@ -49,33 +61,45 @@ $(".lightbox-wrapper").each(function () {
   // Open lightbox
   galleryItems.on("click", function () {
     let index = $(this).index();
+    let lightboxEl = lightbox[0];
 
     lightboxItems.removeClass("is--active");
     lightboxItems.eq(index).addClass("is--active");
 
     lightbox.css("display", "block");
 
-    // Disable scroll via ScrollSmoother
-    disableScroll();
+    // mark active wrapper
+    $(".lightbox-wrapper").removeClass("is--active");
+    wrapper.addClass("is--active");
+
+    // Disable scroll using ScrollSmoother + compensate position
+    disableScroll(lightboxEl);
 
     // Dim header
     header.style.opacity = 0.03;
     header.style.pointerEvents = "none";
-
-    // Mark this wrapper as active
-    $(".lightbox-wrapper").removeClass("is--active");
-    wrapper.addClass("is--active");
   });
 
-  // Close lightbox (click on close button)
+  // Close lightbox (close button)
   wrapper.find(".close-button").on("click", function () {
+    let lightboxEl = lightbox[0];
+
     lightbox.css("display", "none");
     wrapper.removeClass("is--active");
 
-    enableScroll();
+    enableScroll(lightboxEl);
 
     header.style.opacity = 1;
     header.style.pointerEvents = "auto";
+  });
+
+  // Arrows inside this wrapper
+  wrapper.find(".scroll-button.is--right").on("click", function () {
+    nextImage(wrapper, lightboxItems);
+  });
+
+  wrapper.find(".scroll-button.is--left").on("click", function () {
+    prevImage(wrapper, lightboxItems);
   });
 });
 
@@ -87,18 +111,19 @@ document.addEventListener("keydown", function (event) {
   if (!activeWrapper.length) return;
 
   let lightbox = activeWrapper.find(".is--lightbox");
+  let lightboxEl = lightbox[0];
   let header = document.querySelector(".header-z-index");
 
   lightbox.css("display", "none");
   activeWrapper.removeClass("is--active");
 
-  enableScroll();
+  enableScroll(lightboxEl);
 
   header.style.opacity = 1;
   header.style.pointerEvents = "auto";
 });
 
-// Arrow navigation (global, but only acts on active wrapper)
+// Arrow navigation (global, works only on active lightbox)
 document.addEventListener("keydown", function (event) {
   let activeWrapper = $(".lightbox-wrapper.is--active");
   if (!activeWrapper.length) return;
@@ -112,7 +137,7 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-// Global functions for image navigation
+// Image navigation helpers
 function nextImage(wrapper, lightboxItems) {
   let activeItem = wrapper.find(".lightbox_item.is--active");
   let nextItem = activeItem.next(".lightbox_item").length
