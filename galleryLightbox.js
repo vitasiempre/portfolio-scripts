@@ -1,5 +1,6 @@
 const smoother = ScrollSmoother.get();
 const smoothContent = document.querySelector("#smooth-content");
+const lightbox = document.querySelector(".is--lightbox");
 let scrollY;
 let rememberedTransform = '';
 
@@ -111,7 +112,7 @@ function nextImage(wrapper, lightboxItems) {
     rememberedTransform = smoothContent.style.transform;
     smoother.paused(true);
     gsap.globalTimeline.pause();
-    console.log("scroll disabled");
+    lightbox.style.transform = `translateY(${ -getCoordinates() }px)`;
     
     // smoothContent.style.overflow = 'hidden';  
   }
@@ -120,7 +121,7 @@ function nextImage(wrapper, lightboxItems) {
     smoothContent.style.transform = rememberedTransform;
     smoother.paused(false);
     gsap.globalTimeline.resume();
-    console.log("scroll enabled");
+    lightbox.style.transform = 'none';
 
 
 
