@@ -106,13 +106,18 @@ function nextImage(wrapper, lightboxItems) {
 
   function disableScroll() {
     rememberedTransform = smoothContent.style.transform;
-    smoother.paused(true)
+    smoother.paused(true);
+    gsap.globalTimeline.pause();
+    console.log("scroll disabled");
+    
     // smoothContent.style.overflow = 'hidden';  
   }
 
   function enableScroll() {
     smoothContent.style.transform = rememberedTransform;
-    smoother.paused(false)
+    smoother.paused(false);
+    gsap.globalTimeline.resume();
+    console.log("scroll enabled");
 
 
 
