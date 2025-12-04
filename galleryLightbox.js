@@ -109,6 +109,7 @@ function nextImage(wrapper, lightboxItems) {
   }
 
   function disableScroll() {
+    getCoordinates();
     rememberedTransform = smoothContent.style.transform;
     smoother.paused(true);
     gsap.globalTimeline.pause();
@@ -148,5 +149,5 @@ function nextImage(wrapper, lightboxItems) {
     console.log(' values ', values);
     
 
-    return values[13];
+    // return values[13];
   }
