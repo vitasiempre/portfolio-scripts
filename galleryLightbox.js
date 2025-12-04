@@ -112,6 +112,8 @@ function nextImage(wrapper, lightboxItems) {
     rememberedTransform = smoothContent.style.transform;
     smoother.paused(true);
     gsap.globalTimeline.pause();
+    console.log(lightbox, ' lightbox ');
+    
     lightbox.style.transform = `translateY(${ -getCoordinates() }px)`;
     
     // smoothContent.style.overflow = 'hidden';  
@@ -134,6 +136,8 @@ function nextImage(wrapper, lightboxItems) {
   function getCoordinates() {
     const style = window.getComputedStyle(smoothContent);
     const matrix = style.transform;
+    console.log(matrix, ' matrix, ', style, ' style');
+    
 
     if (!matrix || matrix === "none") return 0;
     
