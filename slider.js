@@ -9,13 +9,6 @@ $('.swiper').each(function index() {
         keyboard: true,
         freeMode: true,
         spaceBetween: 15,
-        breakpoints: {
-        // when window width is >= 320px
-        400: {
-        enabled: false,
-        momentumBounce: false,
-        momentum: false,
-        },
-        }
+        
     }
     )});
