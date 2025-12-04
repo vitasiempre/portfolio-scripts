@@ -1,12 +1,15 @@
+const smoother = ScrollSmoother.get();
+const smoothContent = document.querySelector("#smooth-content");
+let scrollY;
+let rememberedTransform = '';
+
+
 $(".lightbox-wrapper").each(function () {
   let wrapper = $(this);
   let lightbox = wrapper.find(".is--lightbox");
   let lightboxItems = wrapper.find(".lightbox_item");
   let galleryItems = wrapper.find(".gallery-collection-item.is--cms-item");
   let header = document.querySelector(".header-z-index");
-  let smoothContent = document.querySelector("#smooth-content");
-  let scrollY;
-  let rememberedTransform = '';
 
   console.log("loaded");
 
@@ -105,7 +108,7 @@ function nextImage(wrapper, lightboxItems) {
   }
 
   function disableScroll() {
-    rememberedTransform = this.smoothContent.style.transform;
+    rememberedTransform = smoothContent.style.transform;
     smoother.paused(true);
     gsap.globalTimeline.pause();
     console.log("scroll disabled");
@@ -114,7 +117,7 @@ function nextImage(wrapper, lightboxItems) {
   }
 
   function enableScroll() {
-    this.smoothContent.style.transform = rememberedTransform;
+    smoothContent.style.transform = rememberedTransform;
     smoother.paused(false);
     gsap.globalTimeline.resume();
     console.log("scroll enabled");
