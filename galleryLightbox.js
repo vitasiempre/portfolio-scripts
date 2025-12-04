@@ -1,5 +1,8 @@
 const smoother = ScrollSmoother.get();
 const smoothContent = document.querySelector("#smooth-content");
+console.log(smoothContent, ' smoothContent ', smoother, ' smoother ');
+
+
 const lightbox = document.querySelector(".is--lightbox");
 let scrollY;
 let rememberedTransform = '';
@@ -137,7 +140,7 @@ function nextImage(wrapper, lightboxItems) {
   function getCoordinates() {
     const style = window.getComputedStyle(smoothContent);
     const matrix = style.transform;
-    console.log(matrix, ' matrix, ', style, ' style');
+    console.log(matrix, ' matrix');
     
 
     if (!matrix || matrix === "none") return 0;
