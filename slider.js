@@ -13,6 +13,8 @@ $('.swiper').each(function index() {
         // when window width is >= 320px
         400: {
         enabled: false,
+        momentumBounce: false,
+        momentum: false,
         },
         }
     }
