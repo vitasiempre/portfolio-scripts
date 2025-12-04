@@ -5,6 +5,8 @@ $(".lightbox-wrapper").each(function () {
   let galleryItems = wrapper.find(".gallery-collection-item.is--cms-item");
   let header = document.querySelector(".header-z-index");
   let smoothContent = document.querySelector("#smooth-content");
+  let scrollY;
+  let rememberedTransform = '';
 
   console.log("loaded");
 
@@ -16,12 +18,10 @@ $(".lightbox-wrapper").each(function () {
     lightbox.css("display", "block");
     
     // Disable scroll
-    // smoothContent.style.overflow = 'hidden';  
-
-
-		document.body.style.top = `-${window.scrollY}px`;
-    console.log(`-${window.scrollY}px`);
-    document.body.style.position = 'fixed';
+    disableScroll();
+		// document.body.style.top = `-${window.scrollY}px`;
+    // console.log(`-${window.scrollY}px`);
+    // document.body.style.position = 'fixed';
     
     // Dim header
     header.style.opacity = 0.03;
@@ -104,9 +104,33 @@ function nextImage(wrapper, lightboxItems) {
     prevItem.addClass("is--active");
   }
 
+  function disableScroll() {
+    rememberedTransform = smoothContent.style.transform;
+    smoother.paused(true)
+    // smoothContent.style.overflow = 'hidden';  
+  }
+
   function enableScroll() {
-    const scrollY = document.body.style.top;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    smoothContent.style.transform = rememberedTransform;
+    smoother.paused(false)
+
+
+
+    // const scrollY = document.body.style.top;
+    // document.body.style.position = '';
+    // document.body.style.top = '';
+    // window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  }
+
+  function getCoordinates() {
+    const style = window.getComputedStyle(smoothContent);
+    const matrix = style.transform;
+
+    if (!matrix || matrix === "none") return 0;
+    
+    const values = matrix.match(/matrix3d\((.+)\)/)[1]
+    .split(',')
+    .map(v => parseFloat(v.trim()));
+
+    return values[13];
   }
