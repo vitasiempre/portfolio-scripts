@@ -19,7 +19,7 @@ function disableScroll(lightboxEl) {
   // compensate for #smooth-content transform:
   // smooth-content is translated -scrollY,
   // so we translate the lightbox +scrollY to cancel it out
-  if (lightboxEl) {
+  if ((lightboxEl) && (window.innerWidth > 400)) {
     lightboxEl.style.transform = `translateY(${savedScrollY}px)`;
   }
 
